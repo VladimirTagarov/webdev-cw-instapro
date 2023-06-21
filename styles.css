@@ -196,3 +196,8 @@
   width: 100%;
   text-align: center;
 }
+
+.button-photo {
+  background-color: #edecff;
+    color: #565eef;
+}
