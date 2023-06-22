@@ -1,4 +1,7 @@
-import { user } from "../index.js";
+import { addNewPost } from "../api.js";
+import { user, getToken } from "../index.js";
+import { renderHeaderComponent } from "./header-component.js";
+import { renderUploadImageComponent } from "./upload-image-component.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
@@ -8,22 +11,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
-    <div class="page-header">
-    <h1 class="logo">instapro</h1>
-    <button class="header-button add-or-login-button">
-    ${
-      user
-        ? `<div title="Добавить пост" class="add-post-sign"></div>`
-        : "Войти"
-    }
-    </button>
-    ${
-      user
-        ? `<button title="${user.name}" class="header-button logout-button">Выйти</button>`
-        : ""
-    }  
-    </button>
-</div>
+    
     <div class="page-container">
           <div class="header-container"></div>
           <div class="form">
@@ -36,13 +24,13 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
                 </h3>
               <div class="form-inputs">
     
-              <button class="button button-photo" id="button-photo">Выберите фото</button>
+              <div class="upload-image-container"></div>
               <p>Опишите фотографию:</p>
                   <textarea type="text" id="text-input" class="textarea"></textarea>
                   
                   <div class="form-error"></div>
                   
-                  <button class="button" id="login-button">Добавить</button>
+                  <button class="button" id="add-button">Добавить</button>
               </div>
             
               
@@ -52,12 +40,40 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
-    document.getElementById("add-button").addEventListener("click", () => {
-      onAddPostClick({
-        description: "Описание картинки",
-        imageUrl: "https://image.png",
-      });
+   
+
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
     });
+
+    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+
+    if (uploadImageContainer) {
+      renderUploadImageComponent({
+        element: appEl.querySelector(".upload-image-container"),
+        onImageUrlChange(newImageUrl) {
+          imageUrl = newImageUrl;
+        },
+      });
+    }
+
+    document.getElementById("add-button").addEventListener("click", () => {
+      const descr = document.getElementById("text-input");
+
+      addNewPost({
+        token: getToken(),
+        description: descr,
+        imageUrl: imageUrl,
+      });
+
+      onAddPostClick({
+        descr,
+        imageUrl,
+      });
+      render();
+    });
+    
+
   };
 
   render();

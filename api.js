@@ -69,3 +69,21 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export function addNewPost({ description, imageUrl, token }) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Вы не загрузили фотографию или не добавили описание");
+    }
+    return response.json();
+  });
+}
