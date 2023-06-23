@@ -42,11 +42,11 @@ export function renderPostsUsersPageComponent({ appEl}) {
   
     appEl.innerHTML = appHtml;
 
-    // const page = USER_POSTS_PAGE;
+    const page = USER_POSTS_PAGE;
 
-    // let data = {
-    //     userId: postsUsers[0]?.user.id
-    // };
+    let data = {
+        userId: postsUsers[0]?.user.id
+    };
 
   
     renderHeaderComponent({
