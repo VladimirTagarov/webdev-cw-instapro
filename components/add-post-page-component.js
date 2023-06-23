@@ -26,7 +26,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     
               <div class="upload-image-container"></div>
               <p>Опишите фотографию:</p>
-                  <textarea type="text" id="text-input" class="textarea"></textarea>
+                  <input type="text" id="text-input" class="textarea"/>
                   
                   <div class="form-error"></div>
                   
