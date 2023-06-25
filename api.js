@@ -1,4 +1,4 @@
-import { posts, userID }  from "../index.js";
+import { posts, userId }  from "../index.js";
 
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
@@ -23,26 +23,26 @@ export function getPosts({ token }) {
 
       return response.json();
     })
-    .then((responseData) => {
-      const postes = responseData.posts
-      .map((post) => {
-        return {
-          id: post.id,
-          imageUrl: post.imageUrl,
-          date: post.createdAt,
-          description: post.description,
-          userId: post.user.id,
-          userName: post.user.name,
-          userLogin: post.user.login,
-          userImageUrl: post.user.imageUrl,
-          likes: post.likes,
-          isLiked: post.isLiked,
-        }
-      })
-    })
-    // .then((data) => {
-    //   return data.posts;
-    // });
+    // .then((responseData) => {
+    //   const postes = responseData.posts
+    //   .map((post) => {
+    //     return {
+    //       id: post.id,
+    //       imageUrl: post.imageUrl,
+    //       date: post.createdAt,
+    //       description: post.description,
+    //       userId: post.user.id,
+    //       userName: post.user.name,
+    //       userLogin: post.user.login,
+    //       userImageUrl: post.user.imageUrl,
+    //       likes: post.likes,
+    //       isLiked: post.isLiked,
+    //     }
+    //   })
+    // })
+    .then((data) => {
+      return data.posts;
+    });
 }
 
 export function getUsersPosts({ token}) {
