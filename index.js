@@ -80,7 +80,7 @@ export const goToPage = (newPage, data) => {
         page = USER_POSTS_PAGE;
         posts = [];
         // postsUsers = data;
-        return renderApp(), userID;
+        return renderApp(), userId;
       // })
       
     }
