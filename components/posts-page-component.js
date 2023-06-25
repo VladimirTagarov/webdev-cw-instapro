@@ -1,10 +1,10 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, user, getToken, renderApp } from "../index.js";
+import { posts, user, getToken, renderApp, page, goToPage } from "../index.js";
 import { addDislike, addLike, getPosts } from "../api.js";
 
 
-export function initLikeButton(page, token, data) {
+export function initLikeButton(token) {
   
   const likeButtonsElements = document.querySelectorAll(".like-button");
 
@@ -12,13 +12,15 @@ export function initLikeButton(page, token, data) {
     let index = likeButtonElement.dataset.index;
 
       likeButtonElement.addEventListener("click", () => {
-        console.log(`лайк поставлен ${likeButtonElement.dataset.isliked}`);
         console.log("кликнул");
         if(likeButtonElement.dataset.isLiked === "true") {
           addDislike({
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
+          // .then(() => {
+          //   likeButtonElement.value === "<img src='./assets/images/like-not-active.svg'>";
+          // })
           .then(() => {
             getPosts({getToken});
           })  
@@ -28,6 +30,9 @@ export function initLikeButton(page, token, data) {
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
+          // .then(() => {
+          //   likeButtonElement.value === "<img src='./assets/images/like-active.svg'>";
+          // })
           .then(() => {
             getPosts({getToken});
           })
