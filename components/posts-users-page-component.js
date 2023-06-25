@@ -2,6 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, user} from "../index.js";
 import { postsUsers } from "../api.js";
+import { initLikeButton } from "./posts-page-component.js";
 
 export function renderPostsUsersPageComponent({ appEl}) {
 
@@ -15,7 +16,7 @@ export function renderPostsUsersPageComponent({ appEl}) {
         <img class="post-image" src=${post.imageUrl}>
       </div>
       <div class="post-likes">
-        <button data-post-id=${post.id} class="like-button">
+        <button data-post-id=${post.id} data-index=${index} data-isLiked=${post.isLiked} class="like-button">
           <img src=${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}>
         </button>
         <p class="post-likes-text">
@@ -52,6 +53,8 @@ export function renderPostsUsersPageComponent({ appEl}) {
     renderHeaderComponent({
       element: document.querySelector(".header-container"),
     });
+
+    initLikeButton();
   
     // for (let userEl of document.querySelectorAll(".post-header")) {
     //   userEl.addEventListener("click", () => {

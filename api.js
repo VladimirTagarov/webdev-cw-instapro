@@ -1,4 +1,4 @@
-import { posts, userId }  from "../index.js";
+import { userId, posts }  from "../index.js";
 
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
@@ -131,7 +131,7 @@ export function addNewPost({ description, imageUrl, token }) {
 }
 
 export function addLike ({token, id}) {
-  return fetch(postsHost + `${id}/like`, {
+  return fetch(postsHost + `/${id}/like`, {
     method: "POST",
     headers: {
       Authorization: token,
@@ -141,15 +141,15 @@ export function addLike ({token, id}) {
     if (response.status === 401) {
       throw new Error("Нет авторизации");
     }
-    return response.json();
+    response.json();
   })
-  .then((responseData) => {
-    posts = responseData;
-  });
+  // .then((responseData) => {
+  //   posts = responseData;
+  // });
 }
 
 export function addDislike ({token, id}) {
-  return fetch(postsHost + `${id}/like`, {
+  return fetch(postsHost + `/${id}/dislike`, {
     method: "POST",
     headers: {
       Authorization: token,
@@ -159,9 +159,9 @@ export function addDislike ({token, id}) {
     if (response.status === 401) {
       throw new Error("Нет авторизации");
     }
-    return response.json();
+    response.json();
   })
-  .then((responseData) => {
-    posts = responseData;
-  });
+  // .then((responseData) => {
+  //   posts = responseData;
+  // });
 }

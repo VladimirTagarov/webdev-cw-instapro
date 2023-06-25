@@ -1,6 +1,41 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, user } from "../index.js";
+import { posts, goToPage, user, getToken, renderApp } from "../index.js";
+import { addDislike, addLike, getPosts } from "../api.js";
+
+
+export function initLikeButton(page, token, data) {
+  
+  const likeButtonsElements = document.querySelectorAll(".like-button");
+
+  for (const likeButtonElement of likeButtonsElements) {
+    let index = likeButtonElement.dataset.index;
+
+      likeButtonElement.addEventListener("click", () => {
+        console.log(`лайк поставлен ${likeButtonElement.dataset.isliked}`);
+        console.log("кликнул");
+        if(likeButtonElement.dataset.isLiked === "true") {
+          addDislike({
+            id: likeButtonElement.dataset.postId,
+            token: getToken(),
+          })
+          .then(() => {
+            getPosts({getToken});
+          })  
+        }
+        else {
+          addLike({
+            id: likeButtonElement.dataset.postId,
+            token: getToken(),
+          })
+          .then(() => {
+            getPosts({getToken});
+          })
+        }
+      })    
+  }
+
+}
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
@@ -21,7 +56,7 @@ export function renderPostsPageComponent({ appEl }) {
       <img class="post-image" src=${post.imageUrl}>
     </div>
     <div class="post-likes">
-      <button data-post-id=${post.id} class="like-button">
+      <button data-post-id=${post.id} data-index=${index} data-isLiked=${post.isLiked} class="like-button">
         <img src=${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}>
       </button>
       <p class="post-likes-text">
@@ -52,6 +87,8 @@ export function renderPostsPageComponent({ appEl }) {
     element: document.querySelector(".header-container"),
   });
 
+  initLikeButton();
+
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
@@ -60,3 +97,5 @@ export function renderPostsPageComponent({ appEl }) {
     });
   }
 }
+
+

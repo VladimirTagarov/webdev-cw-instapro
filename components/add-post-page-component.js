@@ -62,13 +62,13 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
       addNewPost({
         token: getToken(),
-        description: descr,
+        description: descr.value,
         imageUrl: imageUrl,
       });
 
       onAddPostClick({
-        descr,
-        imageUrl,
+        description: descr.value,
+        imageUrl: imageUrl,
       });
       render();
     });
