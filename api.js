@@ -130,7 +130,7 @@ export function addNewPost({ description, imageUrl, token }) {
   });
 }
 
-export function addLike ({token, id}) {
+export function addLike ({token, id, posts}) {
   return fetch(postsHost + `/${id}/like`, {
     method: "POST",
     headers: {
@@ -143,12 +143,12 @@ export function addLike ({token, id}) {
     }
     response.json();
   })
-  // .then((responseData) => {
-  //   posts = responseData;
-  // });
+  .then((responseData) => {
+    posts = responseData;
+  });
 }
 
-export function addDislike ({token, id}) {
+export function addDislike ({token, id, posts}) {
   return fetch(postsHost + `/${id}/dislike`, {
     method: "POST",
     headers: {
@@ -161,7 +161,7 @@ export function addDislike ({token, id}) {
     }
     response.json();
   })
-  // .then((responseData) => {
-  //   posts = responseData;
-  // });
+  .then((responseData) => {
+    posts = responseData;
+  });
 }
