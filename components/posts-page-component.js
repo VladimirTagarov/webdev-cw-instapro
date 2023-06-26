@@ -1,30 +1,31 @@
-import { USER_POSTS_PAGE } from "../routes.js";
+import { USER_POSTS_PAGE, POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, user, getToken, renderApp, page, goToPage } from "../index.js";
 import { addDislike, addLike, getPosts } from "../api.js";
 
 
-export function initLikeButton(token) {
+export function initLikeButton(token, appEl) {
   
   const likeButtonsElements = document.querySelectorAll(".like-button");
+  // console.log(appEl);
 
   for (const likeButtonElement of likeButtonsElements) {
     let index = likeButtonElement.dataset.index;
 
       likeButtonElement.addEventListener("click", () => {
-        console.log("кликнул");
-        console.log(likeButtonElement);
+        // console.log("кликнул");
+        // console.log(likeButtonElement);
         if(likeButtonElement.dataset.isliked === "true") {
           addDislike({
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
           .then(() => {
+            // console.log(renderPostsPageComponent);
+            // renderPostsPageComponent({appEl});
+            renderApp();
             getPosts({getToken});
           })  
-          // .then(() => {
-          //   likeButtonElement.classList.add("not-active")
-          // })
         }
         else {
           addLike({
@@ -32,11 +33,11 @@ export function initLikeButton(token) {
             token: getToken(),
           })
           .then(() => {
+            // console.log(renderPostsPageComponent);
+            // renderPostsPageComponent({appEl});
+            renderApp();
             getPosts({getToken});
           })
-          // .then(() => {
-          //   likeButtonElement.classList.add("active")
-          // })
         }
       })
           
@@ -44,7 +45,7 @@ export function initLikeButton(token) {
 
 }
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, page }) {
   // TODO: реализовать рендер постов из api
   console.log("Актуальный список постов:", posts);
 
@@ -53,7 +54,7 @@ export function renderPostsPageComponent({ appEl }) {
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
-  const postsHTML = posts.map((post, index) => {
+  let postsHTML = posts.map((post, index) => {
     return  `<li class="post" data-post-index=${index}>
     <div class="post-header" data-user-id=${post.user.id}>
         <img src=${post.user.imageUrl} class="post-header__user-image">
@@ -93,10 +94,11 @@ export function renderPostsPageComponent({ appEl }) {
 
   appEl.innerHTML = appHtml;
 
+  page = POSTS_PAGE;
+
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
   });
-
   initLikeButton();
 
   for (let userEl of document.querySelectorAll(".post-header")) {
@@ -106,6 +108,7 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
+
 }
 
 
