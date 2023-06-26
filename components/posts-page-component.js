@@ -13,31 +13,29 @@ export function initLikeButton(token) {
 
       likeButtonElement.addEventListener("click", () => {
         console.log("кликнул");
-        if(likeButtonElement.dataset.isLiked === "true") {
+        console.log(likeButtonElement.value);
+        if(likeButtonElement.dataset.isliked === "true") {
           addDislike({
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
-          // .then(() => {
-          //   likeButtonElement.value === "<img src='./assets/images/like-not-active.svg'>";
-          // })
           .then(() => {
             getPosts({getToken});
           })  
+          
         }
         else {
           addLike({
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
-          // .then(() => {
-          //   likeButtonElement.value === "<img src='./assets/images/like-active.svg'>";
-          // })
           .then(() => {
             getPosts({getToken});
           })
+          
         }
-      })    
+      })
+          
   }
 
 }
@@ -65,7 +63,10 @@ export function renderPostsPageComponent({ appEl }) {
         <img src=${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}>
       </button>
       <p class="post-likes-text">
-        Нравится: <strong>${post.likes.length}</strong>
+        Нравится: <strong>${
+          (post.likes.length) === 0 ? 0 : 
+          (post.likes.length === 1) ? post.likes[post.likes.length - 1].name :
+          (post.likes.length > 1) ? post.likes[post.likes.length - 1].name + ' и ещё ' + (post.likes.length - 1): ''}</strong>
       </p>
     </div>
     <p class="post-text">
