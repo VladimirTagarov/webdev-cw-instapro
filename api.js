@@ -3,7 +3,7 @@ import { userId, posts }  from "../index.js";
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 // const personalKey = "tagarov-vladimir";
-const personalKey = "prod";
+const personalKey = "tagarov-vladimir";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -139,7 +139,8 @@ export function addLike ({token, id, posts}) {
   })
   .then((response) => {
     if (response.status === 401) {
-      throw new Error("Нет авторизации");
+      alert("Лайк может поставить только авторизованный пользователь");
+      throw new Error("Нет авторизации");      
     }
     response.json();
   })
@@ -157,6 +158,7 @@ export function addDislike ({token, id, posts}) {
   })
   .then((response) => {
     if (response.status === 401) {
+      alert("Лайк может поставить только авторизованный пользователь");
       throw new Error("Нет авторизации");
     }
     response.json();

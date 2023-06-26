@@ -13,7 +13,7 @@ export function initLikeButton(token) {
 
       likeButtonElement.addEventListener("click", () => {
         console.log("кликнул");
-        console.log(likeButtonElement.value);
+        console.log(likeButtonElement);
         if(likeButtonElement.dataset.isliked === "true") {
           addDislike({
             id: likeButtonElement.dataset.postId,
@@ -22,7 +22,9 @@ export function initLikeButton(token) {
           .then(() => {
             getPosts({getToken});
           })  
-          
+          // .then(() => {
+          //   likeButtonElement.classList.add("not-active")
+          // })
         }
         else {
           addLike({
@@ -32,7 +34,9 @@ export function initLikeButton(token) {
           .then(() => {
             getPosts({getToken});
           })
-          
+          // .then(() => {
+          //   likeButtonElement.classList.add("active")
+          // })
         }
       })
           
