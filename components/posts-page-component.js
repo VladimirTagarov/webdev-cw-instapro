@@ -22,7 +22,10 @@ export function initLikeButton(token, appEl) {
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
-          .then(() => {
+          .then((responseData) => {
+            console.log(responseData);
+            // let newPost = response[index].likes;
+            // likeButtonElement = newPost;
             // console.log(renderPostsPageComponent);
             // renderPostsPageComponent({appEl});
             renderApp({appEl});
@@ -34,7 +37,10 @@ export function initLikeButton(token, appEl) {
             id: likeButtonElement.dataset.postId,
             token: getToken(),
           })
-          .then(() => {
+          .then((responseData) => {
+            console.log(responseData);
+            // let newPost = response[index].likes;
+            // likeButtonElement = newPost;
             // console.log(renderPostsPageComponent);
             // renderPostsPageComponent({appEl});
             renderApp();
@@ -97,6 +103,10 @@ export function renderPostsPageComponent({ appEl, page }) {
   appEl.innerHTML = appHtml;
 
   page = POSTS_PAGE;
+
+  let data = {
+    userId: posts[0]?.user.id
+};
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),

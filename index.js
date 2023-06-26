@@ -129,12 +129,26 @@ export const renderApp = () => {
     });
   }
 
+  // if (page === POSTS_PAGE) {
+  //   return renderPostsPageComponent({
+  //     appEl,
+  //     posts
+  //   });
+  // }
+
   if (page === POSTS_PAGE) {
+    getPosts({
+      token: getToken(),
+      id: userId,
+    })
+    .then((newPosts) => {
+      posts = newPosts;
     return renderPostsPageComponent({
       appEl,
       posts
     });
-  }
+  })
+}
 
   if (page === USER_POSTS_PAGE) {
     getUsersPosts({
