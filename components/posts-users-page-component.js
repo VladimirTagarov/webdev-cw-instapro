@@ -3,6 +3,8 @@ import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, user} from "../index.js";
 import { postsUsers } from "../api.js";
 import { initLikeButton } from "./posts-page-component.js";
+import {format, formatDistance, formatDistanceToNow} from "date-fns";
+import { ru } from "date-fns/locale";
 
 export function renderPostsUsersPageComponent({ appEl}) {
 
@@ -31,7 +33,7 @@ export function renderPostsUsersPageComponent({ appEl}) {
         ${post.description}
       </p>
       <p class="post-date">
-        ${post.createdAt}
+      ${formatDistanceToNow(new Date(post.createdAt), {locale: ru}) + " назад"}
       </p>
     </li>`
     }).join("");

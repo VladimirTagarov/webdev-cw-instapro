@@ -17,6 +17,7 @@ import {
   saveUserToLocalStorage,
 } from "./helpers.js";
 import { renderPostsUsersPageComponent } from "./components/posts-users-page-component.js";
+import {format} from "date-fns";
 
 export let user = getUserFromLocalStorage();
 export let page = null;

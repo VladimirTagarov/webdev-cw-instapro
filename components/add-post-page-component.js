@@ -2,6 +2,7 @@ import { addNewPost } from "../api.js";
 import { user, getToken } from "../index.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
+import {format} from "date-fns";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {

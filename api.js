@@ -1,4 +1,5 @@
-import { userId, posts }  from "../index.js";
+import { userId, posts }  from "./index.js";
+// import {format} from "date-fns";
 
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod

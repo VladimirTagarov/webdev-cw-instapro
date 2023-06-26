@@ -2,6 +2,8 @@ import { USER_POSTS_PAGE, POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, user, getToken, renderApp, page, goToPage } from "../index.js";
 import { addDislike, addLike, getPosts } from "../api.js";
+import {format, formatDistance, formatDistanceToNow} from "date-fns";
+import { ru } from "date-fns/locale";
 
 
 export function initLikeButton(token, appEl) {
@@ -23,7 +25,7 @@ export function initLikeButton(token, appEl) {
           .then(() => {
             // console.log(renderPostsPageComponent);
             // renderPostsPageComponent({appEl});
-            renderApp();
+            renderApp({appEl});
             getPosts({getToken});
           })  
         }
@@ -79,7 +81,7 @@ export function renderPostsPageComponent({ appEl, page }) {
       ${post.description}
     </p>
     <p class="post-date">
-      ${post.createdAt}
+      ${formatDistanceToNow(new Date(post.createdAt), {locale: ru}) + " назад"}
     </p>
   </li>`
   }).join("");
