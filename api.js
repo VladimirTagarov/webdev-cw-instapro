@@ -1,9 +1,14 @@
+import { userId, posts }  from "./index.js";
+// import {format} from "date-fns";
+
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 // const personalKey = "tagarov-vladimir";
-const personalKey = "prod";
+const personalKey = "tagarov-vladimir";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
+
+export let postsUsers = [];
 
 export function getPosts({ token }) {
   return fetch(postsHost, {
@@ -21,6 +26,27 @@ export function getPosts({ token }) {
     })
     .then((data) => {
       return data.posts;
+    });
+}
+
+export function getUsersPosts({ token}) {
+  return fetch(postsHost + `/user-posts/${userId}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+      return response.json();
+    })
+    .then((responseData) => {
+      console.log(responseData);
+      postsUsers = responseData.posts;
+      return postsUsers;
     });
 }
 
@@ -67,5 +93,61 @@ export function uploadImage({ file }) {
     body: data,
   }).then((response) => {
     return response.json();
+  });
+}
+
+export function addNewPost({ description, imageUrl, token }) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Вы не загрузили фотографию или не добавили описание");
+    }
+    return response.json();
+  });
+}
+
+export function addLike ({token, id, posts}) {
+  return fetch(postsHost + `/${id}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      alert("Лайк может поставить только авторизованный пользователь");
+      throw new Error("Нет авторизации");      
+    }
+    response.json();
+  })
+  .then((responseData) => {
+    posts = responseData;
+  });
+}
+
+export function addDislike ({token, id, posts}) {
+  return fetch(postsHost + `/${id}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      alert("Лайк может поставить только авторизованный пользователь");
+      throw new Error("Нет авторизации");
+    }
+    response.json();
+  })
+  .then((responseData) => {
+    posts = responseData;
   });
 }
